@@ -2,7 +2,9 @@ package org.example;
 
 import javax.imageio.IIOException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,7 +16,7 @@ public class Main {
             System.out.println("Ошибка: введено неверное количество параметров");
             return;
         }
-        String LastName = data[0];
+        String lastName = data[0];
         String firstName = data[1];
         String patronymic = data[2];
         String birthDate = data[3];
@@ -33,20 +35,25 @@ public class Main {
             return;
         }
         try {
-            FileWriter fileWriter = new FileWriter(lastName + ".txt");
-            fileWriter.write(input);
+
+
+            FileWriter fileWriter = new FileWriter(lastName + ".txt", true);
+            fileWriter.write(input+"; ");
+            fileWriter.write("\n");
             fileWriter.close();
             System.out.println("Данные успешно записаны в файл "+ lastName + ".txt");
-        } catch (IIOException e){
+        }  catch (IOException e) {
             System.out.println("Ошибка записи в файл: ");
             e.getStackTrace();
+            throw new RuntimeException(e);
         }
     }
     private static boolean isCorrectBirthDate(String birthDate){
-        return birthDate.matches("\d{2}\.\d{2}\.\d{4}");
+        return birthDate.matches("\\d{2}\\.\\d{2}\\.\\d{4}");
     }
     private static boolean isCorrectPhoneNumber(String phoneNumber){
-        return phoneNumber.matches("\+7\d{10}");
+
+        return Pattern.matches("\\+7\\d{10}", phoneNumber);
     }
     private static boolean isCorrectGender(String gender){
         return gender.equals("m") || gender.equals("f");
