@@ -42,4 +42,14 @@ public class Main {
             e.getStackTrace();
         }
     }
+    private static boolean isCorrectBirthDate(String birthDate){
+        return birthDate.matches("\d{2}\.\d{2}\.\d{4}");
+    }
+    private static boolean isCorrectPhoneNumber(String phoneNumber){
+        return phoneNumber.matches("\+7\d{10}");
+    }
+    private static boolean isCorrectGender(String gender){
+        return gender.equals("m") || gender.equals("f");
+    }
+
 }
