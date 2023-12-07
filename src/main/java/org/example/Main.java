@@ -1,5 +1,7 @@
 package org.example;
 
+import javax.imageio.IIOException;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 public class Main {
@@ -29,6 +31,15 @@ public class Main {
         if (!isCorrectGender(gender)){
             System.out.println("Ошибка: неверное значение пола. Ожидается m или f");
             return;
+        }
+        try {
+            FileWriter fileWriter = new FileWriter(lastName + ".txt");
+            fileWriter.write(input);
+            fileWriter.close();
+            System.out.println("Данные успешно записаны в файл "+ lastName + ".txt");
+        } catch (IIOException e){
+            System.out.println("Ошибка записи в файл: ");
+            e.getStackTrace();
         }
     }
 }
